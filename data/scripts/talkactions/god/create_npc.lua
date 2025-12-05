@@ -17,7 +17,7 @@ function createNpc.onSay(player, words, param)
 	local permanentStr = split[2]
 
 	local position = player:getPosition()
-	local npc = Game.createNpc(name, position)
+	local npc = Game.createNpc(name, position, false, true)
 	if npc then
 		npc:setMasterPos(position)
 		position:sendMagicEffect(CONST_ME_MAGIC_RED)

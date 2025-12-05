@@ -67,6 +67,9 @@ bool NpcType::loadCallback(LuaScriptInterface* scriptInterface) {
 		case NPCS_EVENT_PLAYER_CLOSE_CHANNEL:
 			info.playerCloseChannel = id;
 			break;
+		case NPCS_EVENT_ON_SPAWN:
+			info.spawnEvent = id;
+			break;
 		default:
 			break;
 	}

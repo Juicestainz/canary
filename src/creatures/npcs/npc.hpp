@@ -82,6 +82,7 @@ public:
 	bool isInteractingWithPlayer(uint32_t playerId);
 	bool isPlayerInteractingOnTopic(uint32_t playerId, uint16_t topicId);
 
+	void onSpawn(const Position &position);
 	void onCreatureAppear(const std::shared_ptr<Creature> &creature, bool isLogin) override;
 	void onRemoveCreature(const std::shared_ptr<Creature> &creature, bool isLogout) override;
 	void onCreatureMove(const std::shared_ptr<Creature> &creature, const std::shared_ptr<Tile> &newTile, const Position &newPos, const std::shared_ptr<Tile> &oldTile, const Position &oldPos, bool teleport) override;

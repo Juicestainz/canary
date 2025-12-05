@@ -50,6 +50,7 @@ void NpcTypeFunctions::init(lua_State* L) {
 	Lua::registerMethod(L, "NpcType", "onBuyItem", NpcTypeFunctions::luaNpcTypeEventOnCallback);
 	Lua::registerMethod(L, "NpcType", "onSellItem", NpcTypeFunctions::luaNpcTypeEventOnCallback);
 	Lua::registerMethod(L, "NpcType", "onCheckItem", NpcTypeFunctions::luaNpcTypeEventOnCallback);
+	Lua::registerMethod(L, "NpcType", "onSpawn", NpcTypeFunctions::luaNpcTypeEventOnCallback);
 
 	Lua::registerMethod(L, "NpcType", "outfit", NpcTypeFunctions::luaNpcTypeOutfit);
 	Lua::registerMethod(L, "NpcType", "baseSpeed", NpcTypeFunctions::luaNpcTypeBaseSpeed);
@@ -334,6 +335,7 @@ int NpcTypeFunctions::luaNpcTypeEventOnCallback(lua_State* L) {
 	// npcType:onBuyItem(callback)
 	// npcType:onSellItem(callback)
 	// npcType:onCheckItem(callback)
+	// npcType:onSpawn(callback)
 	const auto &npcType = Lua::getUserdataShared<NpcType>(L, 1, "NpcType");
 	if (npcType) {
 		if (npcType->loadCallback(&g_scripts().getScriptInterface())) {
