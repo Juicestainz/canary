@@ -263,6 +263,31 @@ void Npc::onCreatureMove(const std::shared_ptr<Creature> &creature, const std::s
 	}
 }
 
+void Npc::onSpawn(const Position &position) {
+	if (npcType->info.spawnEvent != -1) {
+		// onSpawn(self, spawnPosition)
+		LuaScriptInterface* scriptInterface = npcType->info.scriptInterface;
+		if (!scriptInterface->reserveScriptEnv()) {
+			g_logger().error("Npc {} creature {}] Call stack overflow. Too many lua "
+			                 "script calls being nested.",
+			                 getName(), this->getName());
+			return;
+		}
+
+		ScriptEnvironment* env = scriptInterface->getScriptEnv();
+		env->setScriptId(npcType->info.spawnEvent, scriptInterface);
+
+		lua_State* L = scriptInterface->getLuaState();
+		scriptInterface->pushFunction(npcType->info.spawnEvent);
+
+		LuaScriptInterface::pushUserdata<Npc>(L, getNpc());
+		LuaScriptInterface::setMetatable(L, -1, "Npc");
+		LuaScriptInterface::pushPosition(L, position);
+
+		scriptInterface->callVoidFunction(2);
+	}
+}
+
 void Npc::manageIdle() {
 	if (creatureCheck && playerSpectators.empty()) {
 		Game::removeCreatureCheck(static_self_cast<Npc>());

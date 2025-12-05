@@ -632,6 +632,7 @@ int GameFunctions::luaGameCreateNpc(lua_State* L) {
 	const bool extended = Lua::getBoolean(L, 3, false);
 	const bool force = Lua::getBoolean(L, 4, false);
 	if (g_game().placeCreature(npc, position, extended, force)) {
+		npc->onSpawn(position);
 		Lua::pushUserdata<Npc>(L, npc);
 		Lua::setMetatable(L, -1, "Npc");
 	} else {
