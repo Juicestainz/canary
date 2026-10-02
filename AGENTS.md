@@ -43,3 +43,12 @@ The global Git, commit, PR, C++ header, exception, and documentation policies ap
 
 - For quickstart changes, read `docs/docker/quickstart-for-beginners.md` and `docker/DOCKER.md`; keep CI/build, development, and user quickstart responsibilities separate.
 - The default client path is `login-server` at `http://localhost:8088/login`, never MyAAC `login.php`. MyAAC remains website/admin-only, uses `slawkens/myaac` `2.x`, and keeps `http://localhost:8080`; public config stays `CANARY_*`, and the quickstart uses the published Canary runtime image.
+
+## Agent Memory System (Mem0)
+
+- Persistent agent context lives in Mem0 through `tools/mem0`; read `tools/mem0/README.md` before first use. Do not keep durable state in scratch files or untracked notes.
+- At the start of a task, recall prior decisions, conventions, and in-progress state with `python3 -m tools.mem0 search "<topic>" --app-id canary --top-k 5`. Before finishing, record durable outcomes with `python3 -m tools.mem0 add --text "<memory>" --app-id canary --wait`.
+- Python tooling must use `from tools.mem0 import Mem0Client` instead of calling the Mem0 REST API directly.
+- Every add, search, and get-all must scope to at least one stable entity id: `--app-id canary` for project-wide facts, `--agent-id <name>` for agent-specific ones, `--user-id <id>` for people. Never store or query unscoped memories.
+- `MEM0_API_KEY` is read from the environment only; never print, log, echo, commit, or pass it on a command line. A missing key is a configuration error to report, never a reason to skip recording or to fabricate memories.
+- Validate memory-tooling changes with `python3 -m unittest discover -s tools/mem0/tests -t . -p "test_*.py" -v`.
