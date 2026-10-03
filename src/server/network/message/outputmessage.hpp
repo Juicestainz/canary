@@ -9,10 +9,15 @@
 
 #pragma once
 
+#include <memory>
+
 #include "server/network/message/networkmessage.hpp"
-#include "server/network/connection/connection.hpp"
 
 class Protocol;
+using Protocol_ptr = std::shared_ptr<Protocol>;
+
+class OutputMessage;
+using OutputMessage_ptr = std::shared_ptr<OutputMessage>;
 
 class OutputMessage : public NetworkMessage {
 public:

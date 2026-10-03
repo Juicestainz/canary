@@ -5165,17 +5165,6 @@ void ProtocolGame::sendCyclopediaCharacterStoreSummary() {
 		msg.addByte(id - 1000);
 	}
 
-	/*std::vector<uint16_t> m_hOutfits;
-	for (const auto &it : g_game().getHirelingOutfits()) {
-	    if (player->kv()->scoped("hireling-outfits")->get(it.second)) {
-	        m_hOutfits.emplace_back(it.first);
-	        g_logger().debug("outfit id: {}, name: {}", it.first, it.second);
-	    }
-	}
-	msg.addByte(m_hOutfits.size());
-	for (const auto &id : m_hOutfits) {
-	    msg.addByte(0x01); // TODO need to get the correct id from hireling outfit
-	}*/
 	msg.addByte(0x00); // hireling outfit size
 
 	auto houseItems = player->cyclopedia().getResult(static_cast<uint8_t>(Summary_t::HOUSE_ITEMS));
@@ -6800,21 +6789,24 @@ void ProtocolGame::sendMarketEnter(uint32_t depotId) {
 	sendResourcesBalance(player->getMoney(), player->getBankBalance(), player->getPreyCards(), player->getTaskHuntingPoints());
 }
 
+void ProtocolGame::sendCoinBalanceUpdating() {
+	// Notifies the client that the coin balance is being updated
+	NetworkMessage msg;
+	msg.addByte(0xF2);
+	msg.addByte(0x01);
+	writeToOutputBuffer(msg);
+}
+
 void ProtocolGame::sendCoinBalance() {
 	if (!player) {
 		return;
 	}
 
 	// send is updating
-	// TODO: export this to it own function
-	NetworkMessage msg;
-	msg.addByte(0xF2);
-	msg.addByte(0x01);
-	writeToOutputBuffer(msg);
-
-	msg.reset();
+	sendCoinBalanceUpdating();
 
 	// send update
+	NetworkMessage msg;
 	msg.addByte(0xDF);
 	msg.addByte(0x01);
 

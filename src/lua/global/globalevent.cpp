@@ -63,7 +63,7 @@ void GlobalEvents::clear() {
 
 	// Clear maps
 	thinkMap.clear();
-	serverMap.clear();
+	serverMapByType.clear();
 	timerMap.clear();
 }
 
@@ -84,7 +84,16 @@ bool GlobalEvents::registerLuaEvent(const std::shared_ptr<GlobalEvent> &globalEv
 			return true;
 		}
 	} else if (globalEvent->getEventType() != GLOBALEVENT_NONE) {
-		const auto result = serverMap.emplace(globalEvent->getName(), globalEvent);
+		// Keep the event-name uniqueness check across all server event types,
+		// matching the previous single serverMap behavior.
+		for (const auto &[type, eventMap] : serverMapByType) {
+			if (eventMap.contains(globalEvent->getName())) {
+				g_logger().warn("Duplicate registered globalevent with name: {}", globalEvent->getName());
+				return false;
+			}
+		}
+
+		const auto result = serverMapByType[globalEvent->getEventType()].emplace(globalEvent->getName(), globalEvent);
 		if (result.second) {
 			return true;
 		}
@@ -208,35 +217,26 @@ void GlobalEvents::think() {
 }
 
 void GlobalEvents::execute(GlobalEvent_t type) const {
-	for (const auto &[globalEventName, globalEvent] : serverMap) {
-		if (globalEvent->getEventType() == type) {
-			globalEvent->executeEvent();
-		}
+	const auto it = serverMapByType.find(type);
+	if (it == serverMapByType.end()) {
+		return;
+	}
+
+	for (const auto &[globalEventName, globalEvent] : it->second) {
+		globalEvent->executeEvent();
 	}
 }
 
 GlobalEventMap GlobalEvents::getEventMap(GlobalEvent_t type) {
-	// TODO: This should be better implemented. Maybe have a map for every type.
 	switch (type) {
 		case GLOBALEVENT_NONE:
 			return thinkMap;
 		case GLOBALEVENT_TIMER:
 			return timerMap;
-		case GLOBALEVENT_PERIODCHANGE:
-		case GLOBALEVENT_STARTUP:
-		case GLOBALEVENT_SHUTDOWN:
-		case GLOBALEVENT_RECORD:
-		case GLOBALEVENT_SAVE: {
-			GlobalEventMap retMap;
-			for (const auto &it : serverMap) {
-				if (it.second->getEventType() == type) {
-					retMap.emplace(it.first, it.second);
-				}
-			}
-			return retMap;
+		default: {
+			const auto it = serverMapByType.find(type);
+			return it != serverMapByType.end() ? it->second : GlobalEventMap();
 		}
-		default:
-			return GlobalEventMap();
 	}
 }
 

@@ -43,6 +43,7 @@
 #include "items/containers/rewards/rewardchest.hpp"
 #include "items/items.hpp"
 #include "items/items_classification.hpp"
+#include "lib/metrics/metrics.hpp"
 #include "lua/callbacks/events_callbacks.hpp"
 #include "lua/creature/actions.hpp"
 #include "lua/creature/creatureevent.hpp"
@@ -11153,8 +11154,7 @@ void Game::playerAnswerModalWindow(uint32_t playerId, uint32_t modalWindowId, ui
 
 	player->onModalWindowHandled(modalWindowId);
 
-	// offline training, hardcoded
-	if (modalWindowId == std::numeric_limits<uint32_t>::max()) {
+	if (modalWindowId == OFFLINE_TRAINING_MODAL_WINDOW_ID) {
 		if (button == 1) {
 			if (choice == SKILL_FIST || choice == SKILL_SWORD || choice == SKILL_AXE || choice == SKILL_CLUB || choice == SKILL_DISTANCE || choice == SKILL_MAGLEVEL) {
 				auto bedItem = player->getBedItem();
