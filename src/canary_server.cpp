@@ -25,6 +25,7 @@
 #include "io/io_bosstiary.hpp"
 #include "io/iomarket.hpp"
 #include "io/ioprey.hpp"
+#include "lib/metrics/metrics.hpp"
 #include "lib/thread/thread_pool.hpp"
 #include "lua/docgen/lua_api_doc_generator.hpp"
 #include "lua/creature/events.hpp"

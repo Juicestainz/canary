@@ -12394,9 +12394,8 @@ void Player::onCreatureMove(const std::shared_ptr<Creature> &creature, const std
 
 	// close modal windows
 	if (!modalWindows.empty()) {
-		// TODO: This shouldn't be hardcoded
 		for (const uint32_t modalWindowId : modalWindows) {
-			if (modalWindowId == std::numeric_limits<uint32_t>::max()) {
+			if (modalWindowId == OFFLINE_TRAINING_MODAL_WINDOW_ID) {
 				sendTextMessage(MESSAGE_EVENT_ADVANCE, "Offline training aborted.");
 				break;
 			}

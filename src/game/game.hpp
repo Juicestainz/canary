@@ -92,6 +92,10 @@ struct PlayerStats {
 	uint32_t totalUniqueIPs = 0;
 };
 
+// Reserved modal window id for the offline training dialog. The client never
+// uses this id, so it doubles as the server-side sentinel.
+static constexpr uint32_t OFFLINE_TRAINING_MODAL_WINDOW_ID = std::numeric_limits<uint32_t>::max();
+
 class Game {
 public:
 	Game();
@@ -911,7 +915,7 @@ private:
 
 	std::unordered_set<std::shared_ptr<Tile>> tilesToClean;
 
-	ModalWindow offlineTrainingWindow { std::numeric_limits<uint32_t>::max(), "Choose a Skill", "Please choose a skill:" };
+	ModalWindow offlineTrainingWindow { OFFLINE_TRAINING_MODAL_WINDOW_ID, "Choose a Skill", "Please choose a skill:" };
 
 	static constexpr int32_t DAY_LENGTH_SECONDS = 3600;
 	static constexpr int32_t LIGHT_DAY_LENGTH = 1440;

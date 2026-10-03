@@ -177,13 +177,3 @@ bool PlayerBadge::accountAllVocations(uint8_t amount) const {
 	}
 	return knight && paladin && druid && sorcerer;
 }
-
-bool PlayerBadge::tournamentParticipation(uint8_t skill) const {
-	// todo check if is used
-	return false;
-}
-
-bool PlayerBadge::tournamentPoints(uint8_t race) const {
-	// todo check if is used
-	return false;
-}

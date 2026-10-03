@@ -11,6 +11,7 @@
 
 #include "creatures/players/player.hpp"
 #include "game/game.hpp"
+#include "server/network/message/networkmessage.hpp"
 
 Modules::Modules() :
 	scriptInterface("Modules Interface") {

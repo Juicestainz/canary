@@ -13,9 +13,9 @@
 #include "lib/di/container.hpp"
 #include "lua/global/baseevents.hpp"
 #include "lua/scripts/luascript.hpp"
-#include "server/network/message/networkmessage.hpp"
 
 class Module;
+class NetworkMessage;
 using Module_ptr = std::shared_ptr<Module>;
 
 class Module final : public Event {

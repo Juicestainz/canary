@@ -470,6 +470,7 @@ private:
 	void sendSpellGroupCooldown(SpellGroup_t groupId, uint32_t time);
 	void sendUseItemCooldown(uint32_t time);
 
+	void sendCoinBalanceUpdating();
 	void sendCoinBalance();
 
 	void sendPreyTimeLeft(const std::unique_ptr<PreySlot> &slot);

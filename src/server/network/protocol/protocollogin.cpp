@@ -10,6 +10,7 @@
 #include "server/network/protocol/protocollogin.hpp"
 
 #include "config/configmanager.hpp"
+#include "server/network/connection/connection.hpp"
 #include "server/network/message/outputmessage.hpp"
 #include "server/network/protocol/protocol_port_utils.hpp"
 #include "server/network/protocol/protocol_session_hint.hpp"

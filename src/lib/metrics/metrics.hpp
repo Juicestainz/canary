@@ -10,7 +10,6 @@
 #pragma once
 
 #ifdef FEATURE_METRICS
-	#include "game/scheduling/dispatcher.hpp"
 	#include <opentelemetry/exporters/ostream/metric_exporter_factory.h>
 	#include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
 	#include <opentelemetry/exporters/prometheus/exporter_factory.h>

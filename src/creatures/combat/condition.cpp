@@ -2862,9 +2862,9 @@ bool ConditionLight::unserializeProp(ConditionAttr_t attr, PropStream &propStrea
 void ConditionLight::serialize(PropWriteStream &propWriteStream) {
 	Condition::serialize(propWriteStream);
 
-	// TODO: color and level could be serialized as 8-bit if we can retain backwards
-	// compatibility, but perhaps we should keep it like this in case they increase
-	// in the future...
+	// NOTE: color and level stay 32-bit on purpose: 8-bit would suffice for the
+	// current limits, but 32-bit preserves headroom if they increase and keeps
+	// the on-disk format backwards compatible.
 	propWriteStream.write<uint8_t>(CONDITIONATTR_LIGHTCOLOR);
 	propWriteStream.write<uint32_t>(lightInfo.color);
 

@@ -54,8 +54,6 @@ public:
 	std::vector<std::shared_ptr<Player>> getPlayersInfoByAccount(const std::shared_ptr<Account> &acc) const;
 	bool accountAllLevel(uint8_t amount) const;
 	bool accountAllVocations(uint8_t amount) const;
-	[[nodiscard]] bool tournamentParticipation(uint8_t skill) const;
-	[[nodiscard]] bool tournamentPoints(uint8_t race) const;
 
 private:
 	// {badge ID, time when it was unlocked}

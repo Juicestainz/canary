@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include "server/network/message/networkmessage.hpp"
 #include "server/network/protocol/protocol.hpp"
 
 class ProtocolStatus final : public Protocol {
