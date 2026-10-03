@@ -25,6 +25,7 @@
 #include "creatures/players/storages/storages.hpp"
 #include "creatures/players/components/player_forge_history.hpp"
 #include "creatures/players/components/pvp/expert_pvp.hpp"
+#include "server/network/message/networkmessage.hpp"
 #include "server/network/protocol/protocolgame.hpp"
 #include "enums/account_errors.hpp"
 #include "enums/account_group_type.hpp"
