@@ -601,11 +601,14 @@ void IOPrey::initializeTaskHuntOptions() {
 		msg.add<uint16_t>(option->secondKills);
 		msg.add<uint16_t>(option->secondReward);
 	});
-	m_baseDataMessage = msg;
+	m_baseDataMessage = std::make_shared<NetworkMessage>(msg);
 }
 
 NetworkMessage IOPrey::getTaskHuntingBaseDate() const {
-	return m_baseDataMessage;
+	if (!m_baseDataMessage) {
+		return {};
+	}
+	return *m_baseDataMessage;
 }
 
 const std::unique_ptr<TaskHuntingOption> &IOPrey::getTaskRewardOption(const std::unique_ptr<TaskHuntingSlot> &slot) const {

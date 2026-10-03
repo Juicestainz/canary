@@ -9,8 +9,9 @@
 
 #pragma once
 
-// TODO: Remove circular includes (maybe shared_ptr?)
-#include "server/network/message/networkmessage.hpp"
+#include <algorithm>
+
+#include "declarations.hpp"
 
 class PreySlot;
 class TaskHuntingSlot;
@@ -90,8 +91,6 @@ enum PreyTaskDifficult_t : uint8_t {
 	PreyTaskDifficult_First = PreyTaskDifficult_Easy,
 	PreyTaskDifficult_Last = PreyTaskDifficult_Hard
 };
-
-class NetworkMessage;
 
 class PreySlot {
 public:
@@ -235,7 +234,7 @@ public:
 
 	NetworkMessage getTaskHuntingBaseDate() const;
 
-	NetworkMessage m_baseDataMessage;
+	std::shared_ptr<NetworkMessage> m_baseDataMessage;
 	std::vector<std::unique_ptr<TaskHuntingOption>> taskOption;
 };
 

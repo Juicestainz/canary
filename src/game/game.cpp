@@ -51,6 +51,7 @@
 #include "lua/global/globalevent.hpp"
 #include "lua/scripts/lua_environment.hpp"
 #include "map/spectators.hpp"
+#include "server/network/message/networkmessage.hpp"
 #include "server/network/protocol/protocollogin.hpp"
 #include "server/network/protocol/protocol_port_utils.hpp"
 #include "server/network/protocol/protocolstatus.hpp"

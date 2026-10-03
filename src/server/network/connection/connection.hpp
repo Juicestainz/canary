@@ -10,13 +10,12 @@
 #pragma once
 
 #include <chrono>
+#include <memory>
 #include <source_location>
 #include <string>
 #include <system_error>
 
 #include "declarations.hpp"
-// TODO: Remove circular includes (maybe shared_ptr?)
-#include "server/network/message/networkmessage.hpp"
 
 static constexpr int32_t CONNECTION_WRITE_TIMEOUT = 30;
 static constexpr int32_t CONNECTION_READ_TIMEOUT = 30;
@@ -128,7 +127,7 @@ private:
 
 	asio::ip::tcp::socket socket;
 
-	NetworkMessage m_msg;
+	std::unique_ptr<NetworkMessage> m_msg;
 
 	std::time_t timeConnected = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	uint32_t packetsSent = 0;
